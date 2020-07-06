@@ -7,6 +7,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.AndroidViewModel
 
+/**
+ * DependencyProperty is dependency resolver by delegated property.
+ * You can use this in Activity/Fragment/AndroidViewModel.
+ * ```
+ * class App : Application(), DependencyComponent {
+ *     val dependencyModules: DependencyModules by dependencyModules()
+ * }
+ * ```
+ */
 internal class DependencyProperty<T : DependencyModule, R>(
     private val dependencyModules: DependencyModules,
     private val clazz: Class<T>,

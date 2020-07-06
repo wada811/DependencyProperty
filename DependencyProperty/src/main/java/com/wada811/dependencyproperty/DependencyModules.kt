@@ -6,6 +6,10 @@ import android.app.Application
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 
+/**
+ * DependencyModules is DependencyModule holder.
+ * Your DependencyModule must add to this by `addModule(module: DependencyModule)`.
+ */
 class DependencyModules internal constructor() {
     private val modules: MutableMap<Class<out DependencyModule>, DependencyModule> = mutableMapOf()
 
