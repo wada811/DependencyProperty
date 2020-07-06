@@ -1,41 +1,62 @@
+@file:Suppress("unused")
+
 package com.wada811.dependencyproperty
 
 import android.app.Application
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import kotlin.properties.ReadOnlyProperty
-import kotlin.reflect.KProperty
+import androidx.lifecycle.AndroidViewModel
 
-internal class DependencyProperty<T : Dependency, R>(
-    private val dependencies: Dependencies,
+internal class DependencyProperty<T : DependencyModule, R>(
+    private val dependencyModules: DependencyModules,
     private val clazz: Class<T>,
     internal val provide: T.() -> R
-) : ReadOnlyProperty<Any, R> {
-    override fun getValue(thisRef: Any, property: KProperty<*>): R = dependencies.findDependency(clazz).provide()
+) : Lazy<R> {
+    private var _value: R? = null
+    override fun isInitialized(): Boolean = _value != null
+    override val value: R
+        get() = _value ?: dependencyModules.findModule(clazz).provide()
 }
 
-fun <T : Dependency, R> Application.dependency(clazz: Class<T>, provide: (T) -> R): ReadOnlyProperty<Any, R> {
-    return DependencyProperty((this as DependenciesComponent).dependencies, clazz, provide)
+@Deprecated("Use dependency<T, R>(provide)", ReplaceWith("this.dependency<T, R>(provide)"), DeprecationLevel.WARNING)
+fun <T : DependencyModule, R> Application.dependency(clazz: Class<T>, provide: (T) -> R): Lazy<R> {
+    return DependencyProperty((this as DependencyComponent).dependencyModules, clazz, provide)
 }
 
-inline fun <reified T : Dependency, R> Application.dependency(noinline provide: (T) -> R): ReadOnlyProperty<Any, R> {
+@Suppress("DEPRECATION")
+inline fun <reified T : DependencyModule, R> Application.dependency(noinline provide: (T) -> R): Lazy<R> {
     return dependency(T::class.java, provide)
 }
 
-fun <T : Dependency, R> FragmentActivity.dependency(clazz: Class<T>, provide: (T) -> R): ReadOnlyProperty<Any, R> {
+@Suppress("DEPRECATION")
+@Deprecated("Use dependency<T, R>(provide)", ReplaceWith("this.dependency<T, R>(provide)"), DeprecationLevel.WARNING)
+fun <T : DependencyModule, R> FragmentActivity.dependency(clazz: Class<T>, provide: (T) -> R): Lazy<R> {
     return application.dependency(clazz, provide)
 }
 
-inline fun <reified T : Dependency, R> FragmentActivity.dependency(noinline provide: (T) -> R): ReadOnlyProperty<Any, R> {
-    return application.dependency(provide)
+@Suppress("DEPRECATION")
+inline fun <reified T : DependencyModule, R> FragmentActivity.dependency(noinline provide: (T) -> R): Lazy<R> {
+    return dependency(T::class.java, provide)
 }
 
-fun <T : Dependency, R> Fragment.dependency(clazz: Class<T>, provide: (T) -> R): ReadOnlyProperty<Any, R> {
+@Suppress("DEPRECATION")
+@Deprecated("Use dependency<T, R>(provide)", ReplaceWith("this.dependency<T, R>(provide)"), DeprecationLevel.WARNING)
+fun <T : DependencyModule, R> Fragment.dependency(clazz: Class<T>, provide: (T) -> R): Lazy<R> {
     return requireActivity().application.dependency(clazz, provide)
 }
 
-inline fun <reified T : Dependency, R> Fragment.dependency(noinline provide: (T) -> R): ReadOnlyProperty<Any, R> {
-    return requireActivity().application.dependency(provide)
+@Suppress("DEPRECATION")
+inline fun <reified T : DependencyModule, R> Fragment.dependency(noinline provide: (T) -> R): Lazy<R> {
+    return dependency(T::class.java, provide)
 }
 
+@Suppress("DEPRECATION")
+@Deprecated("Use dependency<T, R>(provide)", ReplaceWith("this.dependency<T, R>(provide)"), DeprecationLevel.WARNING)
+fun <T : DependencyModule, R> AndroidViewModel.dependency(clazz: Class<T>, provide: (T) -> R): Lazy<R> {
+    return getApplication<Application>().dependency(clazz, provide)
+}
 
+@Suppress("DEPRECATION")
+inline fun <reified T : DependencyModule, R> AndroidViewModel.dependency(noinline provide: (T) -> R): Lazy<R> {
+    return dependency(T::class.java, provide)
+}

@@ -6,31 +6,29 @@ DependencyProperty
 ## Usage
 ### Application
 ```kt
-class App: Application(), DependenciesComponent {
-    override val dependencies: Dependencies by initDependencies()
+class App: Application(), DependencyComponent {
+    override val dependencyModules: DependencyModules by dependencyModules()
     override fun onCreate() {
-        dependencies.addDependency(AppDependency())
+        dependencyModules.addModule(AppModule())
     }
 }
 ```
 
-### Dependency
+### Module
 ```kt
-class AppDependency : Dependency {
+class AppModule : DependencyModule {
     val singleton: String by lazy { "singleton" }
     val factory: String get() = "factory"
-    val params: List<String> by lazy { listOf(singleton, factory) }
     fun binds(instance: Int): Pair<String, Int> = singleton to instance
 }
 ```
 
-### Activity/Fragment
+### Activity/Fragment/AndroidViewModel
 ```kt
 class MainActivity : AppCompatActivity() {
-    private val singleton by dependency<AppDependency, String> { it.singleton }
-    private val factory by dependency<AppDependency, String> { it.factory }
-    private val params by dependency<AppDependency, List<String>> { it.params }
-    private val binds by dependency<AppDependency, Pair<String, Int>> { it.binds(42) }
+    private val singleton by dependency<AppModule, String> { it.singleton }
+    private val factory by dependency<AppModule, String> { it.factory }
+    private val binds by dependency<AppModule, Pair<String, Int>> { it.binds(42) }
 }
 ```
 
@@ -50,6 +48,6 @@ dependencies {
 
 ## License
 
-Copyright (C) 2019 wada811
+Copyright (C) 2020 wada811
 
 Licensed under the Apache License, Version 2.0

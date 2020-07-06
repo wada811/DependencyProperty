@@ -1,0 +1,3 @@
+package com.wada811.dependencyproperty
+
+interface DependencyModule
