@@ -10,11 +10,6 @@ import androidx.lifecycle.AndroidViewModel
 /**
  * DependencyProperty is dependency resolver by delegated property.
  * You can use this in Activity/Fragment/AndroidViewModel.
- * ```
- * class App : Application(), DependencyComponent {
- *     val dependencyModules: DependencyModules by dependencyModules()
- * }
- * ```
  */
 internal class DependencyProperty<T : DependencyModule, R>(
     private val dependencyModules: DependencyModules,
@@ -29,7 +24,7 @@ internal class DependencyProperty<T : DependencyModule, R>(
 
 @Deprecated("Use dependency<T, R>(provide)", ReplaceWith("this.dependency<T, R>(provide)"), DeprecationLevel.WARNING)
 fun <T : DependencyModule, R> Application.dependency(clazz: Class<T>, provide: (T) -> R): Lazy<R> {
-    return DependencyProperty((this as DependencyComponent).dependencyModules, clazz, provide)
+    return DependencyProperty((this as DependencyContext).dependencyModules, clazz, provide)
 }
 
 @Suppress("DEPRECATION")

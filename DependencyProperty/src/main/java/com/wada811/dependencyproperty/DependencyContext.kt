@@ -5,22 +5,22 @@ package com.wada811.dependencyproperty
 import android.app.Application
 
 /**
- * DependencyComponent is DependencyModules holder.
+ * DependencyContext is DependencyModules holder.
  * Your Application class must implement this.
  *
  * ```
- * class App : Application(), DependencyComponent {
+ * class App : Application(), DependencyContext {
  *     val dependencyModules: DependencyModules by dependencyModules()
  * }
  * ```
  */
-interface DependencyComponent {
+interface DependencyContext {
     /**
      * val dependencyModules: DependencyModules by dependencyModules()
      */
     val dependencyModules: DependencyModules
 
-    fun <T> T.dependencyModules(): Lazy<DependencyModules> where T : Application, T : DependencyComponent {
-        return lazy(LazyThreadSafetyMode.NONE) { DependencyModules() }
+    fun <T> T.dependencyModules(vararg modules: DependencyModule): Lazy<DependencyModules> where T : Application, T : DependencyContext {
+        return lazy(LazyThreadSafetyMode.NONE) { DependencyModules(*modules) }
     }
 }

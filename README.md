@@ -1,16 +1,13 @@
 DependencyProperty
 =====
 
-`DependencyProperty` is a dependency injection library by Delegated Property.
+`DependencyProperty` is a dependency resolution library by Delegated Property.
 
 ## Usage
 ### Application
 ```kt
-class App: Application(), DependencyComponent {
-    override val dependencyModules: DependencyModules by dependencyModules()
-    override fun onCreate() {
-        dependencyModules.addModule(AppModule())
-    }
+class App: Application(), DependencyContext {
+    override val dependencyModules: DependencyModules by dependencyModules(AppModule())
 }
 ```
 
