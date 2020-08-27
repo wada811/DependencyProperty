@@ -14,7 +14,7 @@ class DependencyModules internal constructor(vararg modules: DependencyModule) {
     private val modules: MutableMap<Class<out DependencyModule>, DependencyModule> = modules.map { it.javaClass to it }.toMap().toMutableMap()
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : DependencyModule> findModule(clazz: Class<T>): T {
+    internal fun <T : DependencyModule> findModule(clazz: Class<T>): T {
         return modules.filter { clazz.isAssignableFrom(it.key) }.map { it.value }.firstOrNull() as? T
             ?: throw IllegalStateException("${clazz.simpleName} is missing. Add module before use it.")
     }
