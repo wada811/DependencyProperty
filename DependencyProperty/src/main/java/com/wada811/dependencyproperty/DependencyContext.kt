@@ -16,7 +16,11 @@ import android.app.Application
  */
 interface DependencyContext {
     /**
-     * val dependencyModules: DependencyModules by dependencyModules()
+     * ```
+     * class App : Application(), DependencyContext {
+     *     val dependencyModules: DependencyModules by dependencyModules()
+     * }
+     * ```
      */
     val dependencyModules: DependencyModules
 
