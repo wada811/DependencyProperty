@@ -46,7 +46,7 @@ class DependencyModules internal constructor(vararg modules: DependencyModule) {
     }
 }
 
-val Application.dependencyModules: DependencyModules get() = (this as DependencyContext).dependencyModules
+val Application.dependencyModules: DependencyModules get() = (this as DependencyModulesHolder).dependencyModules
 val FragmentActivity.dependencyModules: DependencyModules get() = application.dependencyModules
 val Fragment.dependencyModules: DependencyModules get() = requireActivity().application.dependencyModules
 val AndroidViewModel.dependencyModules: DependencyModules get() = getApplication<Application>().dependencyModules

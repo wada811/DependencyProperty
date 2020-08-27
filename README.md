@@ -6,7 +6,7 @@ DependencyProperty
 ## Usage
 ### Application
 ```kt
-class App: Application(), DependencyContext {
+class App: Application(), DependencyModulesHolder {
     override val dependencyModules: DependencyModules by dependencyModules(AppModule())
 }
 ```

@@ -19,7 +19,7 @@ internal class DependencyProperty<T : DependencyModule, R>(
     private var _value: R? = null
     override fun isInitialized(): Boolean = _value != null
     override val value: R
-        get() = _value ?: (applicationProvider() as DependencyContext).dependencyModules.findModule(clazz).provide()
+        get() = _value ?: applicationProvider().dependencyModules.findModule(clazz).provide()
 }
 
 @Deprecated("Use dependency<T, R>(provide)", ReplaceWith("this.dependency<T, R>(provide)"), DeprecationLevel.WARNING)
