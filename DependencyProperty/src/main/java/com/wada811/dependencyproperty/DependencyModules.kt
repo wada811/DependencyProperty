@@ -34,14 +34,19 @@ class DependencyModules internal constructor(vararg modules: DependencyModule) {
     fun <T : DependencyModule> replaceModule(module: T) {
         modules[module.javaClass] = module
     }
+
+    @Suppress("DEPRECATION")
+    inline fun <reified T : DependencyModule> removeModule() {
+        removeModule(T::class.java)
+    }
+
+    @Deprecated("Use removeModule<T>()", ReplaceWith("this.removeModule<T>()"), DeprecationLevel.WARNING)
+    fun <T : DependencyModule> removeModule(clazz: Class<T>) {
+        modules.remove(clazz)
+    }
 }
 
-fun <T : DependencyModule> Application.addModule(module: T) = (this as DependencyContext).dependencyModules.addModule(module)
-fun <T : DependencyModule> FragmentActivity.addModule(module: T) = application.addModule(module)
-fun <T : DependencyModule> Fragment.addModule(module: T) = requireActivity().application.addModule(module)
-fun <T : DependencyModule> AndroidViewModel.addModule(module: T) = getApplication<Application>().addModule(module)
-
-fun <T : DependencyModule> Application.replaceModule(module: T) = (this as DependencyContext).dependencyModules.replaceModule(module)
-fun <T : DependencyModule> FragmentActivity.replaceModule(module: T) = application.replaceModule(module)
-fun <T : DependencyModule> Fragment.replaceModule(module: T) = requireActivity().application.replaceModule(module)
-fun <T : DependencyModule> AndroidViewModel.replaceModule(module: T) = getApplication<Application>().replaceModule(module)
+val Application.dependencyModules: DependencyModules get() = (this as DependencyContext).dependencyModules
+val FragmentActivity.dependencyModules: DependencyModules get() = application.dependencyModules
+val Fragment.dependencyModules: DependencyModules get() = requireActivity().application.dependencyModules
+val AndroidViewModel.dependencyModules: DependencyModules get() = getApplication<Application>().dependencyModules
