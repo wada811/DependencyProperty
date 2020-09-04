@@ -50,3 +50,8 @@ val Application.dependencyModules: DependencyModules get() = (this as Dependency
 val FragmentActivity.dependencyModules: DependencyModules get() = application.dependencyModules
 val Fragment.dependencyModules: DependencyModules get() = requireActivity().application.dependencyModules
 val AndroidViewModel.dependencyModules: DependencyModules get() = getApplication<Application>().dependencyModules
+
+fun <T : DependencyModule> Application.dependencyModule(clazz: Class<T>): T = dependencyModules.findModule(clazz)
+fun <T : DependencyModule> FragmentActivity.dependencyModule(clazz: Class<T>): T = dependencyModules.findModule(clazz)
+fun <T : DependencyModule> Fragment.dependencyModule(clazz: Class<T>): T = dependencyModules.findModule(clazz)
+fun <T : DependencyModule> AndroidViewModel.dependencyModule(clazz: Class<T>): T = dependencyModules.findModule(clazz)
