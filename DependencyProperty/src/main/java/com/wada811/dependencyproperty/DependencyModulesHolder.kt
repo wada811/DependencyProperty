@@ -10,7 +10,7 @@ import android.app.Application
  *
  * ```
  * class App : Application(), DependencyModulesHolder {
- *     val dependencyModules: DependencyModules by dependencyModules()
+ *     override val dependencyModules: DependencyModules by dependencyModules()
  * }
  * ```
  */
@@ -18,7 +18,7 @@ interface DependencyModulesHolder {
     /**
      * ```
      * class App : Application(), DependencyModulesHolder {
-     *     val dependencyModules: DependencyModules by dependencyModules()
+     *     override val dependencyModules: DependencyModules by dependencyModules()
      * }
      * ```
      */

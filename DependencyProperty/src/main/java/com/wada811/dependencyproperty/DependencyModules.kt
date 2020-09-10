@@ -3,6 +3,7 @@
 package com.wada811.dependencyproperty
 
 import android.app.Application
+import android.app.Service
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.AndroidViewModel
@@ -50,3 +51,4 @@ val Application.dependencyModules: DependencyModules get() = (this as Dependency
 val FragmentActivity.dependencyModules: DependencyModules get() = application.dependencyModules
 val Fragment.dependencyModules: DependencyModules get() = requireActivity().application.dependencyModules
 val AndroidViewModel.dependencyModules: DependencyModules get() = getApplication<Application>().dependencyModules
+val Service.dependencyModules: DependencyModules get() = application.dependencyModules

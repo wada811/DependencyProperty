@@ -16,7 +16,7 @@ class App: Application(), DependencyModulesHolder {
 class AppModule : DependencyModule {
     val singleton: String by lazy { "singleton" }
     val factory: String get() = "factory"
-    fun binds(instance: Int): Pair<String, Int> = singleton to instance
+    fun provide(instance: Int): Pair<String, Int> = singleton to instance
 }
 ```
 
@@ -25,7 +25,7 @@ class AppModule : DependencyModule {
 class MainActivity : AppCompatActivity() {
     private val singleton by dependency<AppModule, String> { it.singleton }
     private val factory by dependency<AppModule, String> { it.factory }
-    private val binds by dependency<AppModule, Pair<String, Int>> { it.binds(42) }
+    private val provide by dependency<AppModule, Pair<String, Int>> { it.provide(42) }
 }
 ```
 
