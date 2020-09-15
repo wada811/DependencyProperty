@@ -20,18 +20,12 @@ class DependencyModules internal constructor(vararg modules: DependencyModule) {
             ?: throw IllegalStateException("${clazz.simpleName} is missing. Add module before use it.")
     }
 
-    /**
-     * For Dynamic Feature Module
-     */
     fun <T : DependencyModule> addModule(module: T) {
         if (modules[module.javaClass] == null) {
             modules[module.javaClass] = module
         }
     }
 
-    /**
-     * For Scope
-     */
     fun <T : DependencyModule> replaceModule(module: T) {
         modules[module.javaClass] = module
     }
