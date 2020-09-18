@@ -48,6 +48,7 @@ You can resolve other DependencyModule using below extension methods.
 - `inline fun <reified T : DependencyModule> Fragment.dependencyModule(): T`
 - `inline fun <reified T : DependencyModule> AndroidViewModel.dependencyModule(): T`
 - `inline fun <reified T : DependencyModule> Service.dependencyModule(): T`
+- `inline fun <reified T : DependencyModule> Context.dependencyModule(): T`
 
 ```kt
 class AppModule(private val application: Application) : DependencyModule {
@@ -72,6 +73,7 @@ You can resolve dependency by delegated property using below extension methods.
 - `fun <T: DependencyModule, R> Fragment.dependency<T, R>(resolve: (T) -> R): Lazy<R>`
 - `fun <T: DependencyModule, R> AndroidViewModel.dependency<T, R>(resolve: (T) -> R): Lazy<R>`
 - `fun <T: DependencyModule, R> Service.dependency<T, R>(resolve: (T) -> R): Lazy<R>`
+- `fun <T: DependencyModule, R> Context.dependency<T, R>(resolve: (T) -> R): Lazy<R>`
 
 Activity's example is below.
 
@@ -175,6 +177,8 @@ val AndroidViewModel.dependencyModules: DependencyModules
     get() = getApplication<Application>().dependencyModules
 val Service.dependencyModules: DependencyModules
     get() = application.dependencyModules
+val Context.dependencyModules: DependencyModules
+    get() = (applicationContext as Application).dependencyModules
 ```
 
 Activity's example is below.
