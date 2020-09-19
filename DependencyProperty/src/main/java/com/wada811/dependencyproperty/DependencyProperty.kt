@@ -8,6 +8,7 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.AndroidViewModel
+import androidx.work.ListenableWorker
 
 @Suppress("DEPRECATION")
 @Deprecated("Use dependency<T, R>(resolve)", ReplaceWith("this.dependency<T, R>(resolve)"), DeprecationLevel.WARNING)
@@ -64,7 +65,6 @@ inline fun <reified T : DependencyModule, R> Service.dependency(noinline resolve
     return dependency(T::class.java, resolve)
 }
 
-
 @Suppress("DEPRECATION")
 @Deprecated("Use dependency<T, R>(resolve)", ReplaceWith("this.dependency<T, R>(resolve)"), DeprecationLevel.WARNING)
 fun <T : DependencyModule, R> Context.dependency(clazz: Class<T>, resolve: T.() -> R): Lazy<R> {
@@ -73,5 +73,16 @@ fun <T : DependencyModule, R> Context.dependency(clazz: Class<T>, resolve: T.() 
 
 @Suppress("DEPRECATION")
 inline fun <reified T : DependencyModule, R> Context.dependency(noinline resolve: (T) -> R): Lazy<R> {
+    return dependency(T::class.java, resolve)
+}
+
+@Suppress("DEPRECATION")
+@Deprecated("Use dependency<T, R>(resolve)", ReplaceWith("this.dependency<T, R>(resolve)"), DeprecationLevel.WARNING)
+fun <T : DependencyModule, R> ListenableWorker.dependency(clazz: Class<T>, resolve: T.() -> R): Lazy<R> {
+    return lazy { dependencyModule(clazz).resolve() }
+}
+
+@Suppress("DEPRECATION")
+inline fun <reified T : DependencyModule, R> ListenableWorker.dependency(noinline resolve: (T) -> R): Lazy<R> {
     return dependency(T::class.java, resolve)
 }

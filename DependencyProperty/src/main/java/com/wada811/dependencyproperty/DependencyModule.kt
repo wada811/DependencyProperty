@@ -8,6 +8,7 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.AndroidViewModel
+import androidx.work.ListenableWorker
 
 /**
  * DependencyModule is maker interface.
@@ -52,3 +53,9 @@ fun <T : DependencyModule> Context.dependencyModule(clazz: Class<T>): T = depend
 
 @Suppress("DEPRECATION")
 inline fun <reified T : DependencyModule> Context.dependencyModule(): T = dependencyModule(T::class.java)
+
+@Deprecated("Use dependencyModule<T>()", ReplaceWith("this.dependencyModule<T>()"), DeprecationLevel.WARNING)
+fun <T : DependencyModule> ListenableWorker.dependencyModule(clazz: Class<T>): T = dependencyModules.findModule(clazz)
+
+@Suppress("DEPRECATION")
+inline fun <reified T : DependencyModule> ListenableWorker.dependencyModule(): T = dependencyModule(T::class.java)
