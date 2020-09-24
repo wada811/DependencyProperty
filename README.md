@@ -9,7 +9,7 @@ DependencyProperty
 
 - simple in defining and resolving dependencies.
 - usable in classes accessible to Application instance like Activity, Fragment, and etc.
-- able to constructor injection to ViewModel without affecting other classes.
+- able to inject to ViewModel's constructor without affecting other classes.
 - less code for testing than Dagger Hilt.
 - easy to use in multi-module and Dynamic Feature Module.
 - easy to manage modules lifecycle.
@@ -18,7 +18,7 @@ DependencyProperty
 
 ## Usage
 ### Configure DependencyProperty in Application
-Application class must implements `DependencyModulesHolder` like below.
+Application class must implements `DependencyModulesHolder` like the following.
 
 ```kt
 class App: Application(), DependencyModulesHolder {
@@ -26,11 +26,11 @@ class App: Application(), DependencyModulesHolder {
 }
 ```
 
-You can pass variable number of arguments(`DependencyModule`) to `dependencyModules()`.
+You can pass `DependencyModule` to `dependencyModules()` as variable number of arguments.
 
 ### Define dependencies in DependencyModule
 `DependencyModule` is marker interface.
-You can define dependencies as property and function.
+You can define dependencies as property or function.
 
 ```kt
 open class CoroutinesModule : DependencyModule {
@@ -41,7 +41,7 @@ open class CoroutinesModule : DependencyModule {
 }
 ```
 
-You can resolve other DependencyModule using below extension methods.
+You can resolve other DependencyModule using the following extension methods.
 
 - `inline fun <reified T : DependencyModule> Application.dependencyModule(): T`
 - `inline fun <reified T : DependencyModule> FragmentActivity.dependencyModule(): T`
@@ -60,13 +60,13 @@ class AppModule(private val application: Application) : DependencyModule {
 }
 ```
 
-- If You want to define dependency as singleton, you can define property as lazy.
-- If You want to define dependency as not singleton, you can define property as getter.
-- If You want to define dependency using parameters, you can define property as function.
+- If You want to define dependency as singleton, you can use lazy.
+- If You want to define dependency as not singleton, you can use getter.
+- If You want to define dependency using parameters, you can use function.
 
 ### Resolve dependencies
 
-You can resolve dependency by delegated property using below extension methods.
+You can resolve dependency by delegated property using the following extension methods.
 
 - `fun <T: DependencyModule, R> Application.dependency<T, R>(resolve: (T) -> R): Lazy<R>`
 - `fun <T: DependencyModule, R> FragmentActivity.dependency<T, R>(resolve: (T) -> R): Lazy<R>`
@@ -75,11 +75,19 @@ You can resolve dependency by delegated property using below extension methods.
 - `fun <T: DependencyModule, R> Service.dependency<T, R>(resolve: (T) -> R): Lazy<R>`
 - `fun <T: DependencyModule, R> Context.dependency<T, R>(resolve: (T) -> R): Lazy<R>`
 
-Activity's example is below.
+Activity's example is the following.
 
 ```kt
 class MainActivity : AppCompatActivity() {
     private val loadItemsUseCase by dependency<AppModule, LoadItemsUseCase> { it.loadItemsUseCase }
+}
+```
+
+Another example is the following.
+
+```kt
+class MainActivity : AppCompatActivity() {
+    private val loadItemsUseCase: LoadItemsUseCase by lazy { dependencyModule<AppModule>().loadItemsUseCase }
 }
 ```
 
@@ -164,7 +172,7 @@ class App: Application(), DependencyModulesHolder {
 }
 ```
 
-In Dynamic Feature Module, you can add DependencyModule dynamically using below extension methods.
+In Dynamic Feature Module, you can add DependencyModule dynamically using the following extension methods.
 
 ```kt
 val Application.dependencyModules: DependencyModules
@@ -181,7 +189,7 @@ val Context.dependencyModules: DependencyModules
     get() = (applicationContext as Application).dependencyModules
 ```
 
-Activity's example is below.
+Activity's example is the following.
 
 ```kt
 class MainActivity : AppCompatActivity() {
@@ -194,13 +202,13 @@ class MainActivity : AppCompatActivity() {
 
 ### Lifecycle of DependencyModule
 
-You can manage lifecycle of DependencyModule below methods.
+You can manage lifecycle of DependencyModule using the following methods.
 
 - `fun <T: DependencyModule> DependencyModules.addModule(module: T)`
 - `fun <T: DependencyModule> DependencyModules.removeModule<T>()`
 - `fun <T: DependencyModule> DependencyModules.replaceModule(module: T)`
 
-Activity's example is below.
+Activity's example is the following.
 
 ```kt
 class MainActivity : AppCompatActivity() {
