@@ -18,7 +18,7 @@ class DependencyModules internal constructor(vararg modules: DependencyModule) {
 
     @Suppress("UNCHECKED_CAST")
     internal fun <T : DependencyModule> findModule(clazz: Class<T>): T {
-        return modules.filter { clazz.isAssignableFrom(it.key) }.map { it.value }.firstOrNull() as? T
+        return modules.asSequence().filter { clazz.isAssignableFrom(it.key) }.map { it.value }.firstOrNull() as? T
             ?: throw IllegalStateException("${clazz.simpleName} is missing. Add module before use it.")
     }
 
