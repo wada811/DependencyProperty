@@ -26,7 +26,7 @@ class App: Application(), DependencyModulesHolder {
 }
 ```
 
-You can pass `DependencyModule` to `dependencyModules()` as variable number of arguments.
+You can pass `DependencyModule` to `dependencyModules()` as variadic arguments.
 
 ### Define dependencies in DependencyModule
 `DependencyModule` is marker interface.
