@@ -1,4 +1,4 @@
-@file:Suppress("unused")
+@file:Suppress("DEPRECATION", "unused")
 
 package com.wada811.dependencyproperty
 
@@ -20,42 +20,28 @@ interface DependencyModule
 
 @Deprecated("Use dependencyModule<T>()", ReplaceWith("this.dependencyModule<T>()"), DeprecationLevel.WARNING)
 fun <T : DependencyModule> Application.dependencyModule(clazz: Class<T>): T = dependencyModules.findModule(clazz)
-
-@Suppress("DEPRECATION")
 inline fun <reified T : DependencyModule> Application.dependencyModule(): T = dependencyModule(T::class.java)
 
 @Deprecated("Use dependencyModule<T>()", ReplaceWith("this.dependencyModule<T>()"), DeprecationLevel.WARNING)
 fun <T : DependencyModule> FragmentActivity.dependencyModule(clazz: Class<T>): T = dependencyModules.findModule(clazz)
-
-@Suppress("DEPRECATION")
 inline fun <reified T : DependencyModule> FragmentActivity.dependencyModule(): T = dependencyModule(T::class.java)
 
 @Deprecated("Use dependencyModule<T>()", ReplaceWith("this.dependencyModule<T>()"), DeprecationLevel.WARNING)
 fun <T : DependencyModule> Fragment.dependencyModule(clazz: Class<T>): T = dependencyModules.findModule(clazz)
-
-@Suppress("DEPRECATION")
 inline fun <reified T : DependencyModule> Fragment.dependencyModule(): T = dependencyModule(T::class.java)
 
 @Deprecated("Use dependencyModule<T>()", ReplaceWith("this.dependencyModule<T>()"), DeprecationLevel.WARNING)
 fun <T : DependencyModule> AndroidViewModel.dependencyModule(clazz: Class<T>): T = dependencyModules.findModule(clazz)
-
-@Suppress("DEPRECATION")
 inline fun <reified T : DependencyModule> AndroidViewModel.dependencyModule(): T = dependencyModule(T::class.java)
 
 @Deprecated("Use dependencyModule<T>()", ReplaceWith("this.dependencyModule<T>()"), DeprecationLevel.WARNING)
 fun <T : DependencyModule> Service.dependencyModule(clazz: Class<T>): T = dependencyModules.findModule(clazz)
-
-@Suppress("DEPRECATION")
 inline fun <reified T : DependencyModule> Service.dependencyModule(): T = dependencyModule(T::class.java)
 
 @Deprecated("Use dependencyModule<T>()", ReplaceWith("this.dependencyModule<T>()"), DeprecationLevel.WARNING)
 fun <T : DependencyModule> Context.dependencyModule(clazz: Class<T>): T = dependencyModules.findModule(clazz)
-
-@Suppress("DEPRECATION")
 inline fun <reified T : DependencyModule> Context.dependencyModule(): T = dependencyModule(T::class.java)
 
 @Deprecated("Use dependencyModule<T>()", ReplaceWith("this.dependencyModule<T>()"), DeprecationLevel.WARNING)
 fun <T : DependencyModule> ListenableWorker.dependencyModule(clazz: Class<T>): T = dependencyModules.findModule(clazz)
-
-@Suppress("DEPRECATION")
 inline fun <reified T : DependencyModule> ListenableWorker.dependencyModule(): T = dependencyModule(T::class.java)
