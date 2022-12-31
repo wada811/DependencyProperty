@@ -17,7 +17,9 @@ DependencyProperty
 - faster execution time than Dagger and Koin.
 
 ## Usage
+
 ### Configure DependencyProperty in Application
+
 Application class must implements `DependencyModulesHolder` like the following.
 
 ```kt
@@ -29,8 +31,8 @@ class App: Application(), DependencyModulesHolder {
 You can pass `DependencyModule` to `dependencyModules()` as variadic arguments.
 
 ### Define dependencies in DependencyModule
-`DependencyModule` is marker interface.
-You can define dependencies as property or function.
+
+`DependencyModule` is marker interface. You can define dependencies as property or function.
 
 ```kt
 open class CoroutinesModule : DependencyModule {
@@ -107,8 +109,7 @@ By @JvmOverloads, ViewModel's dependencies is passed as default arguments.
 
 ### Unit Test
 
-In Unit Test, DependencyProperty is not used.
-You can inject to constructor.
+In Unit Test, DependencyProperty is not used. You can inject to constructor.
 
 ```kt
 @Test
@@ -163,8 +164,7 @@ class TestCoroutinesModule : CoroutinesModule() {
 
 ### Multi-module and Dynamic Feature Module
 
-In multi-module, no extra settings.
-You can use other module's DependencyModule in app module.
+In multi-module, no extra settings. You can use other module's DependencyModule in app module.
 
 ```kt
 class App: Application(), DependencyModulesHolder {
@@ -222,15 +222,15 @@ class MainActivity : AppCompatActivity() {
 
 ## Gradle
 
-[![](https://jitpack.io/v/wada811/DependencyProperty.svg)](https://jitpack.io/#wada811/DependencyProperty)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.wada811.dependencyproperty/dependencyproperty/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.wada811.dependencyproperty/dependencyproperty)
 
 ```groovy
 repositories {
-    maven { url "https://www.jitpack.io" }
+    mavenCentral()
 }
 
 dependencies {
-    implementation 'com.github.wada811:DependencyProperty:x.y.z'
+    implementation 'com.wada811.dependencyproperty:dependencyproperty:x.y.z'
 }
 ```
 
