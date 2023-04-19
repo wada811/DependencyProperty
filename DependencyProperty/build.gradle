@@ -18,6 +18,6 @@ android {
 
 dependencies {
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.10"
-    compileOnly "androidx.fragment:fragment-ktx:1.5.5"
+    compileOnly "androidx.fragment:fragment-ktx:1.5.7"
     compileOnly "androidx.work:work-runtime:2.8.0"
 }
